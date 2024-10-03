@@ -1,0 +1,27 @@
+{
+  "name": "ecommerce_mern",
+  "version": "1.0.0",
+  "description": "this is flipkart clone.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RohanSinghTakhi/ecommerce_mern.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "mern",
+    "project",
+    "backend",
+    "api",
+    "api"
+  ],
+  "author": "rohan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RohanSinghTakhi/ecommerce_mern/issues"
+  },
+  "homepage": "https://github.com/RohanSinghTakhi/ecommerce_mern#readme"
+}
