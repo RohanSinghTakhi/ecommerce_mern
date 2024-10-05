@@ -1,16 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const User = require("../models/User") // Assuming your User model is in the "models" directory
+const User = require("../../models/User") // Assuming your User model is in the "models" directory
 const jwt = require('jsonwebtoken');
 
-router.post('/Signin', async (req, res) => {
+router.post('/admin/Signin', async (req, res) => {
     try {
         // Use async/await to handle the query
         const user = await User.findOne({ email: req.body.email }).exec();
 
         if (user) {
             // Check if the password matches using the authenticate method
-            if (user.authenticate(req.body.password)) {
+            if (user.authenticate(req.body.password) && user.role === "admin" ) {
                 // Generate a JWT token
                 const token = jwt.sign(
                     { _id: user._id },
@@ -48,7 +48,7 @@ router.post('/Signin', async (req, res) => {
 });
 
 
-router.post('/Signup', async (req, res) => {
+router.post('/admin/Signup', async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
 
@@ -56,7 +56,7 @@ router.post('/Signup', async (req, res) => {
         const userExists = await User.findOne({ email }).exec();
 
         if (userExists) {
-            return res.status(400).json({ message: "User already registered" });
+            return res.status(400).json({ message: "admin already registered" });
         }
 
         // Generate a unique userActivationName
@@ -69,6 +69,7 @@ router.post('/Signup', async (req, res) => {
             email,
             password,
             userActivationName, // Include the generated userActivationName
+            role:"admin",
             username: Math.random().toString() // If you still want to generate a username
         });
 
@@ -82,36 +83,5 @@ router.post('/Signup', async (req, res) => {
 });
 
 
-
-router.post("/profile", (req, res, next) => {
-    try {
-        const authHeader = req.headers.authorization; // Get the authorization header
-        
-        // Check if the authorization header is present
-        if (!authHeader) {
-            return res.status(401).json({ message: "Authorization header missing!" });
-        }
-        
-        // Extract the token from the 'Bearer token' format
-        const token = authHeader.split(" ")[1];
-        
-        // If the token is missing from the Bearer header
-        if (!token) {
-            return res.status(401).json({ message: "Authentication failed, token missing!" });
-        }
-
-        // Verify the token
-        const user = jwt.verify(token, process.env.JWT_SECRET);
-
-        // Attach user info to the request object
-        req.user = user;
-
-        // Proceed with the next middleware or send a success response
-        res.status(200).json({ message: "Token verified", user: req.user });
-    } catch (error) {
-        // Handle token verification errors
-        return res.status(401).json({ message: "Invalid or expired token", error: error.message });
-    }
-});
 
 module.exports = router

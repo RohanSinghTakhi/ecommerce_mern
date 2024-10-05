@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     userActivationName: {
         type: String,
-        required: false,
+        required: true,
         trim: true,
         unique: true,
         index: true,
@@ -57,7 +57,10 @@ userSchema.virtual('password')
 userSchema.methods = {
     authenticate: function (password) {
         return bcrypt.compareSync(password, this.hash_password)
-    }
-}
+    }}
+
+userSchema.virtual('fullName').get(function(){
+    return `${this.firstName} ${this.lastName}`
+})
 
 module.exports = mongoose.model('users', userSchema)
