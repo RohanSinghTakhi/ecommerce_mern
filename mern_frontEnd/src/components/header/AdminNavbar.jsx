@@ -1,6 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Signin from '../../containers/Signin/Signin';
+import Singup from '../../containers/Singup/Singup';
 
 function AdminNavbar() {
   return (
@@ -20,9 +23,13 @@ function AdminNavbar() {
             </NavDropdown> */}
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">Signin</Nav.Link>
-
-          </Nav>
+  <Nav.Link as={Link} to="/signin">
+    Signin
+  </Nav.Link>
+  <Nav.Link as={Link} to="/Singup">
+    Signup
+  </Nav.Link>
+</Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
