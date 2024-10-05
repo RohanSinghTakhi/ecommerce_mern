@@ -27,6 +27,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "ecommerce_mern": "file:",
     "env": "^0.0.2",
     "express": "^4.21.0",
     "express-validator": "^7.2.0",
